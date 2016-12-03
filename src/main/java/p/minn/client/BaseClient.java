@@ -2,7 +2,6 @@ package p.minn.client;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import p.minn.packet.Encoder;
 public abstract class BaseClient<T,T1> implements ClientEventListener<T,T1>{
     protected  Logger logger = LoggerFactory.getLogger(this.getClass());
 	public int byteIn;
-	public String uuid;
+	public String uuid=null;
 	public int clientId;
 	public int group=0;
 	private boolean isHs=false;
@@ -61,9 +60,6 @@ public abstract class BaseClient<T,T1> implements ClientEventListener<T,T1>{
 		return isHs;
 	}
 	
-	public void addMethodPacket(T packet) throws IOException{
-		encoder.add(packet);
-	}
 	public void addPacket(T packet) throws IOException{
 		encoder.add(packet);
 	}
@@ -71,9 +67,7 @@ public abstract class BaseClient<T,T1> implements ClientEventListener<T,T1>{
 	      return socket.socket().getInetAddress().getHostAddress();
 	}
 	
-	public void existsMessage()throws Exception {};
-    public void onEvent(T1 wrapper)throws Exception {};
-    public void onEvent(List<T1> wrappers,T packet)throws Exception {};
+	public void existsMessage(double reponseId)throws Exception {};
 	public void onAudioEvent(T packet,T1 wrapper)throws Exception {}
     public void onFlvEvent(T packet,T1 wrapper)throws Exception {}
     public void onPictureEvent(T packet,T1 wrapper)throws Exception {}

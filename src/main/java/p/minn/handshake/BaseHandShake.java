@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import p.minn.client.BaseClient;
 import p.minn.listener.ControllerEventListener;
 import p.minn.listener.HandShakeListener;
+import p.minn.utils.BaseConstants;
 
 
 /**
@@ -30,7 +31,7 @@ public abstract class BaseHandShake<T,T1> extends Thread implements HandShakeLis
     protected String uuid;
     public int state = 0;
     public boolean isHsp=false;
-    private long lasttime=System.currentTimeMillis();
+    protected long lasttime=System.currentTimeMillis();
     private long currenttime;
     public boolean isHsp() {
         return isHsp;
@@ -52,7 +53,7 @@ public abstract class BaseHandShake<T,T1> extends Thread implements HandShakeLis
 		while (true) {
 			try {
 			      currenttime=System.currentTimeMillis();
-			      if(currenttime-lasttime>1000){
+			      if(currenttime-lasttime>BaseConstants.INTERVAL){
     				  if(removesockets.size()>0||newsockets.size()>0){
     					sockets.removeAll(removesockets);
     					int newsize=newsockets.size();

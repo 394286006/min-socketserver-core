@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import p.minn.client.BaseClient;
 import p.minn.listener.ControllerEventListener;
+import p.minn.utils.BaseConstants;
 
 /**
  * @author minn
@@ -38,7 +39,7 @@ public class JobThread<T,T1> extends Thread {
 		while (true) {
 		  
 		  currenttime=System.currentTimeMillis();
-		  if(currenttime-lasttime>1000){
+		  if(currenttime-lasttime>BaseConstants.INTERVAL){
 			clients.removeAll(lostClients);
 			clients.addAll(newClients);
 			lostClients.clear();
@@ -58,24 +59,6 @@ public class JobThread<T,T1> extends Thread {
 		}
 		
 		}
-	}
-
-	public void addClient(BaseClient<T,T1> client) {
-	  try{
-           //lock.writeLock().lock();
-		   newClients.add(client);
-		}finally{
-		  //lock.writeLock().unlock();
-		}
-	}
-
-	public void removeClient(BaseClient<T,T1> client) {
-	  try{
-        //lock.writeLock().lock();
-		lostClients.add(client);
-	  }finally{
-        //lock.writeLock().unlock();
-      }
 	}
 
 }

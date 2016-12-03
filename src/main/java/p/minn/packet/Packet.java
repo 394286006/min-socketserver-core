@@ -5,7 +5,7 @@ package p.minn.packet;
  * @QQ:394286006
  * 
  */
-public  class Packet {
+public abstract class Packet {
 
   protected int clientId=-1;
   protected int group=1;
@@ -29,6 +29,7 @@ public  class Packet {
   }
   public void setBody(byte[] body) {
     this.body = body;
+    this.bodySize=body.length;
   }
   public int getClientId() {
     return clientId;

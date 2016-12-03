@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public abstract class Encoder<T> {
   protected  Logger logger = LoggerFactory.getLogger(this.getClass());
   protected SocketChannel socket;
-  private BufferedOutputStream out;
+  protected BufferedOutputStream out;
   
   public void setSocket(SocketChannel socket) {
       this.socket = socket;
@@ -33,9 +33,8 @@ public abstract class Encoder<T> {
     }
   }
    public void add ( T packet)throws IOException{
-       write(out,packet);
+       write(packet);
    }
-
  
-  public abstract void write(BufferedOutputStream out,T packet) throws IOException;
+  public abstract void write(T packet) throws IOException;
 }

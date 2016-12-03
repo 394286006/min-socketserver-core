@@ -14,5 +14,7 @@ public class BaseConstants {
 	public static boolean SOCKET_BLOCK=true;
 	
 	public static int SOCKET_PORT=8990;
+	
+	public static final int INTERVAL=1000;
 
 }

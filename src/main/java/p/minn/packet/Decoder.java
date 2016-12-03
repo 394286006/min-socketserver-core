@@ -3,7 +3,6 @@ package p.minn.packet;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,7 @@ import p.minn.listener.ClientEventListener;
  */
 public abstract class Decoder<T,T1> {
   protected  Logger logger = LoggerFactory.getLogger(this.getClass());
-  protected byte [ ] data;           
-  protected ByteBuffer buffer;   
+  private ByteBuffer buffer;   
   protected SocketChannel socket;
   protected ClientEventListener<T,T1> evt=null;
   
@@ -38,9 +36,8 @@ public abstract class Decoder<T,T1> {
       this.socket = socket;
   }
   public void step() throws Exception{
-    List<T1> t1=null;
+    int read = 0;
        buffer.clear();
-       int read = 0;
        read = socket.read(buffer);
        if (read == -1){
         logger.error("Connection closed.");
@@ -49,12 +46,11 @@ public abstract class Decoder<T,T1> {
        if (read == 0){
            return;
        }
-       t1= read(buffer.array());
-       eventSwitch(t1);
-     
+       buffer.flip();
+        read(buffer);
+       
  }
-  protected abstract List<T1> read (byte[] data) throws Exception ;
-  protected void eventSwitch (List<T1> wrappers) throws Exception {};
+  protected abstract void read (ByteBuffer buffer) throws Exception ;
   
 
 }
